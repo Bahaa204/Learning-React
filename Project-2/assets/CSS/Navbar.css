@@ -1,0 +1,46 @@
+header {
+  background-color: black;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header > p {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+header > nav {
+  display: flex;
+  gap: 2rem;
+}
+
+nav > a {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+nav > a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 1rem;
+  }
+
+  header > p {
+    font-size: 1.2rem;
+  }
+
+  header > nav {
+    gap: 1rem;
+  }
+
+  nav > a {
+    padding: 0.5rem;
+  }
+}

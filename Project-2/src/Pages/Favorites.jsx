@@ -1,10 +1,14 @@
-import Header from "../Components/Header";
+import "../../assets/CSS/Favorites.css";
+import NavBar from "../Components/NavBar";
 
 export default function Favorites() {
   return (
     <>
-      <Header />
-      <p>No Favorites Yet</p>
+      <NavBar />
+      <div className="favorites-empty">
+        <h2>No Favorite Movies Yet</h2>
+        <p>Start adding movies to your favorites and they will appear here!</p>
+      </div>
     </>
   );
 }

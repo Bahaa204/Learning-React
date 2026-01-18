@@ -1,3 +1,5 @@
+import "../../assets/CSS/SearchBar.css";
+
 export default function SearchBar({ SearchInput, setSearchInput }) {
   function handleInputChange(event) {
     setSearchInput(event.target.value);

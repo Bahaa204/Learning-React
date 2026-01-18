@@ -1,5 +1,6 @@
 import { useState } from "react";
 import MovieCard from "./MovieCard";
+import "../../assets/CSS/MovieGrid.css";
 
 export default function MovieGrid({ SearchInput }) {
   const [Movies, setMovies] = useState([

@@ -1,10 +1,21 @@
+import "../../assets/CSS/MovieCard.css";
+
 export default function MovieCard({ movie }) {
   return (
-    <div className="MovieCard">
-      <img src={movie.img || null} alt={movie.title} />
-      <h3>{movie.title}</h3>
-      <p>Description: {movie.description}</p>
-      <p>Release Date: {movie.release_date}</p>
+    <div className="movie-card">
+      <div className="movie-poster">
+        <img
+          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          alt={movie.title}
+        />
+        <div className="movie-overlay">
+          <button>♥</button>
+        </div>
+      </div>
+      <div className="movie-info">
+        <h3>{movie.title}</h3>
+        <p>{movie.release_date}</p>
+      </div>
     </div>
   );
 }
