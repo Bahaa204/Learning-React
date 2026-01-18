@@ -1,25 +1,16 @@
-import { useState } from "react";
-export default function SearchBar() {
-  const [SearchInput, setSearchInput] = useState("");
-
+export default function SearchBar({ SearchInput, setSearchInput }) {
   function handleInputChange(event) {
     setSearchInput(event.target.value);
   }
 
-  function handleClick() {
-    if (SearchInput != "") {
+  function handleKey(event) {
+    if (event.key === "Enter") {
       setSearchInput("");
     }
   }
 
-  function handleKey(event) {
-    if (event.key === "Enter") {
-      handleClick();
-    }
-  }
-
   return (
-    <div className="SearchBar">
+    <>
       <input
         type="text"
         placeholder="Search Movies"
@@ -27,9 +18,6 @@ export default function SearchBar() {
         onChange={handleInputChange}
         value={SearchInput}
       />
-      <button type="submit" onClick={handleClick}>
-        Search
-      </button>
-    </div>
+    </>
   );
 }
