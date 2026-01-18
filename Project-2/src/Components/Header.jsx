@@ -3,8 +3,8 @@ export default function Header() {
     <header>
       <p>Movie App</p>
       <nav>
-        <a href="#">Home</a>
-        <a href="#">Favorites</a>
+        <a href="/">Home</a>
+        <a href="favorites">Favorites</a>
       </nav>
     </header>
   );
