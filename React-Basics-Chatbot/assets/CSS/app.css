@@ -1,0 +1,15 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Arial;
+}
+
+.App {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

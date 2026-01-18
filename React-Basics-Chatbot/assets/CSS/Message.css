@@ -1,0 +1,22 @@
+.message {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.user-message {
+  flex-direction: row-reverse;
+  justify-content: end;
+}
+
+.message > p {
+  background-color: lightgrey;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin: 0px 10px 20px 10px;
+  max-width: 300px;
+}
+
+.message > img {
+  width: 45px;
+}
