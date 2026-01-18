@@ -1,12 +1,10 @@
 import "../assets/CSS/App.css";
-import MovieGrid from "./Components/MovieGrid";
-import Header from "./Components/Header";
+import Home from "./Pages/Home";
 
 function App() {
   return (
     <>
-      <Header />
-      <MovieGrid />
+      <Home />
     </>
   );
 }
