@@ -1,11 +1,7 @@
 .home {
-  padding: 2rem 0;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-@media (max-width: 639px) {
-  .home {
-    padding: 1rem 0;
-  }
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }

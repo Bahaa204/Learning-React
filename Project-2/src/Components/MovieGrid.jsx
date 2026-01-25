@@ -1,39 +1,45 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import MovieCard from "./MovieCard";
 import "../../assets/CSS/MovieGrid.css";
+import { getPopularMovies, sortMovies } from "../helpers/api";
 
-export default function MovieGrid({ SearchInput }) {
-  const [Movies, setMovies] = useState([
-    {
-      id: crypto.randomUUID(),
-      img: "",
-      title: "John Wick",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus quisquam et repellat quo ut dolores nulla quae reprehenderit minus quam rem vero maiores deleniti exercitationem neque fuga velit, qui tempora!",
-      release_date: 2025,
-    },
-    {
-      id: crypto.randomUUID(),
-      img: "",
-      title: "Terminator",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus quisquam et repellat quo ut dolores nulla quae reprehenderit minus quam rem vero maiores deleniti exercitationem neque fuga velit, qui tempora!",
-      release_date: 2020,
-    },
-  ]);
-
-  function filterMovies(title) {
-    return title.trim().toLowerCase().includes(SearchInput);
+export default function MovieGrid({
+  Movies,
+  setMovies,
+  error,
+  setError,
+  loading,
+  setLoading,
+}) {
+  async function loadPopularMovies() {
+    try {
+      const movies = await getPopularMovies();
+      setMovies(sortMovies(movies));
+    } catch (error) {
+      console.log(error);
+      setError("Failed to load Movies...");
+    } finally {
+      setLoading(false);
+    }
   }
 
+  useEffect(() => {
+    loadPopularMovies();
+  }, []);
+
   return (
-    <div className="MovieGrid">
-      {Movies.map(
-        (movie) =>
-          filterMovies(movie.title) && (
+    <>
+      {error && <div className="error-message">Error: {error}</div>}
+
+      {loading ? (
+        <div className="loading">Loading Movies Please Wait!</div>
+      ) : (
+        <div className="MovieGrid">
+          {Movies.map((movie) => (
             <MovieCard movie={movie} key={movie.id} />
-          ),
+          ))}
+        </div>
       )}
-    </div>
+    </>
   );
 }

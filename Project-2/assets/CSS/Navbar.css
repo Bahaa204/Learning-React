@@ -2,8 +2,10 @@ header {
   background-color: black;
   padding: 1rem 2rem;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
 header > p {
