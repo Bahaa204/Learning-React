@@ -1,14 +1,11 @@
 import { useState } from "react";
 import "../../assets/CSS/SearchBar.css";
 import { searchMovies, sortMovies } from "../helpers/api.js";
+import { useMovieContext } from "../contexts/Contexts.js";
 
-export default function SearchBar({
-  setMovies,
-  setError,
-  loading,
-  setLoading,
-}) {
+export default function SearchBar() {
   const [SearchInput, setSearchInput] = useState("");
+  const { loading, setLoading, setMovies, setError } = useMovieContext();
 
   function handleInputChange(event) {
     setSearchInput(event.target.value);

@@ -1,31 +1,35 @@
 import MovieGrid from "../Components/MovieGrid";
 import NavBar from "../Components/NavBar";
 import SearchBar from "../Components/SearchBar";
-import { useState } from "react";
+import { useEffect } from "react";
+import { getPopularMovies, sortMovies } from "../helpers/api";
+import { useMovieContext } from "../contexts/Contexts";
 import "../../assets/CSS/Home.css";
 
 export default function Home() {
-  const [Movies, setMovies] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { setMovies, setError, setLoading, Movies } = useMovieContext();
+
+  async function loadPopularMovies() {
+    try {
+      const movies = await getPopularMovies();
+      setMovies(sortMovies(movies));
+    } catch (error) {
+      console.log(error);
+      setError("Failed to load Movies...");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    loadPopularMovies();
+  }, []);
 
   return (
     <div className="home">
       <NavBar />
-      <SearchBar
-        setMovies={setMovies}
-        loading={loading}
-        setLoading={setLoading}
-        setError={setError}
-      />
-      <MovieGrid
-        Movies={Movies}
-        setMovies={setMovies}
-        loading={loading}
-        setLoading={setLoading}
-        error={error}
-        setError={setError}
-      />
+      <SearchBar />
+      <MovieGrid Movies={Movies} />
     </div>
   );
 }

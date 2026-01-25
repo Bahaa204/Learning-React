@@ -6,8 +6,12 @@ export function MovieProvider({ children }) {
     JSON.parse(localStorage.getItem("favorites")) || [],
   );
 
+  const [Movies, setMovies] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    localStorage.setItem("favorites", Favorites);
+    localStorage.setItem("favorites", JSON.stringify(Favorites));
   }, [Favorites]);
 
   function addFavorite(movie) {
@@ -27,6 +31,12 @@ export function MovieProvider({ children }) {
     addFavorite,
     removeFavorite,
     isFavorite,
+    Movies,
+    setMovies,
+    error,
+    setError,
+    loading,
+    setLoading,
   };
 
   return (

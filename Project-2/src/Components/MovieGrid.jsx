@@ -1,31 +1,9 @@
-import { useEffect } from "react";
 import MovieCard from "./MovieCard";
 import "../../assets/CSS/MovieGrid.css";
-import { getPopularMovies, sortMovies } from "../helpers/api";
+import { useMovieContext } from "../contexts/Contexts";
 
-export default function MovieGrid({
-  Movies,
-  setMovies,
-  error,
-  setError,
-  loading,
-  setLoading,
-}) {
-  async function loadPopularMovies() {
-    try {
-      const movies = await getPopularMovies();
-      setMovies(sortMovies(movies));
-    } catch (error) {
-      console.log(error);
-      setError("Failed to load Movies...");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    loadPopularMovies();
-  }, []);
+export default function MovieGrid({ Movies }) {
+  const { error, loading} = useMovieContext();
 
   return (
     <>
