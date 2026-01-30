@@ -65,7 +65,7 @@ export default function Home() {
             CookLab started as a small idea during exams when instant noodles
             betrayed us one too many times.
           </p>
-          <a href="/CookLab/Partials/About.html" className="btn">
+          <a href="about" className="btn">
             Read More
           </a>
         </div>
