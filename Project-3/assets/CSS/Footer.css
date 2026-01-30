@@ -1,0 +1,38 @@
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #e64726;
+  color: white;
+  padding: 25px 60px;
+}
+
+.footer-left,
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+.footer-right a {
+  margin-left: 15px;
+}
+
+.socials img {
+  width: 20px;
+  margin-right: 10px;
+  filter: invert(100%);
+}
+
