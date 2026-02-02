@@ -120,6 +120,14 @@
   background-color: #7a2e1f;
 }
 
+.footer-bear {
+  width: 140px;
+  max-width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+}
+
 @keyframes pop-in {
   from {
     transform: scale(0.8);
