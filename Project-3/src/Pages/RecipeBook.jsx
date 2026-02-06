@@ -24,33 +24,30 @@ export default function RecipeBook() {
 
   useEffect(() => {
     function applyFilter() {
+      const normalized_name = RecipeName.trim().toLowerCase();
       // console.log("Name: ", RecipeName);
       // console.log("MealType: ", Mealtype);
       // console.log("Preptime: ", Preptime);
       const isFilterActive =
-        RecipeName !== "" || Mealtype !== "All" || Preptime !== 0;
+        normalized_name !== "" || Mealtype !== "All" || Preptime !== 0;
       console.log("is filter active?", isFilterActive);
 
       const filteredData = DisplayedRecipes.filter((recipe) => {
         if (Mealtype == "All") {
           return (
-            recipe.name.trim().toLowerCase().includes(RecipeName) &&
+            recipe.name.trim().toLowerCase().includes(normalized_name) &&
             recipe.prepTimeMinutes >= Preptime
           );
         }
         return (
-          recipe.name.trim().toLowerCase().includes(RecipeName) &&
+          recipe.name.trim().toLowerCase().includes(normalized_name) &&
           recipe.mealType.includes(Mealtype) &&
           recipe.prepTimeMinutes >= Preptime
         );
       });
 
-      if (isFilterActive) {
-        console.log("filtered Data: ", filteredData);
-        setDisplayedRecipes(filteredData);
-      } else {
-        setDisplayedRecipes(recipes);
-      }
+      console.log("filtered Data: ", filteredData);
+      setDisplayedRecipes(isFilterActive ? filteredData : recipes);
     }
     applyFilter();
   }, [RecipeName, Mealtype, Preptime]);
@@ -104,53 +101,71 @@ export default function RecipeBook() {
   function displayPage(page) {
     const half = Object.keys(page);
     const index = Object.values(page);
+    if (DisplayedRecipes.length === 0) {
+      console.log(half);
+      return (
+        <div className={`book ${half}`} key={half}>
+          <div className="book-text book-error">
+            <p>No Recipes Found</p>
+          </div>
+        </div>
+      );
+    }
     const selectedData = DisplayedRecipes[index];
     const DataDisplay = (
       <div className={`book ${half}`} key={half}>
-        <div className="book-text">
-          <img src={selectedData.image} alt={selectedData.name} />
-          <p>{selectedData.name}</p>
-          <div className="ingredients">
-            Ingredients:
-            <ol id={`ingredients-list-${half}`}>
-              {selectedData.ingredients.slice(0, 2).map((ingredient, index) => (
-                <li key={index}>{ingredient}</li>
-              ))}
-            </ol>
-            <button
-              type="button"
-              id={`ingredients-btn-${half}`}
-              onClick={getIngredients}
-            >
-              click to show more
+        {!selectedData ? (
+          <div className="book-text book-error">
+            <p>No Recipes Found</p>
+          </div>
+        ) : (
+          <div className="book-text">
+            <img src={selectedData.image} alt={selectedData.name} />
+            <p>{selectedData.name}</p>
+            <div className="ingredients">
+              Ingredients:
+              <ol id={`ingredients-list-${half}`}>
+                {selectedData.ingredients
+                  .slice(0, 2)
+                  .map((ingredient, index) => (
+                    <li key={index}>{ingredient}</li>
+                  ))}
+              </ol>
+              <button
+                type="button"
+                id={`ingredients-btn-${half}`}
+                onClick={getIngredients}
+              >
+                click to show more
+              </button>
+            </div>
+            <div className="instructions">
+              Instructions:
+              <ol id={`instructions-list-${half}`}>
+                {selectedData.instructions
+                  .slice(0, 3)
+                  .map((instruction, index) => (
+                    <li key={index}>{instruction}</li>
+                  ))}
+              </ol>
+              <button
+                type="button"
+                id={`instructions-btn-${half}`}
+                onClick={getInstructions}
+              >
+                click to show more
+              </button>
+            </div>
+            <p>Prep Time in Minutes: {selectedData.prepTimeMinutes}</p>
+            <p>Cook Time in Minutes: {selectedData.cookTimeMinutes}</p>
+            <p>Cuisine: {selectedData.cuisine}</p>
+            <p>Rating: {selectedData.rating}</p>
+            <p>Meal Type: {selectedData.mealType.join(", ")}</p>
+            <button type="button" id={`favorite-btn-${half}`}>
+              {Favorites.includes(selectedData.id) ? "Unfavorite" : "Favorite"}
             </button>
           </div>
-          <div className="instructions">
-            Instructions:
-            <ol id={`instructions-list-${half}`}>
-              {selectedData.instructions
-                .slice(0, 3)
-                .map((instruction, index) => (
-                  <li key={index}>{instruction}</li>
-                ))}
-            </ol>
-            <button
-              type="button"
-              id={`instructions-btn-${half}`}
-              onClick={getInstructions}
-            >
-              click to show more
-            </button>
-          </div>
-          <p>Prep Time in Minutes: {selectedData.prepTimeMinutes}</p>
-          <p>Cook Time in Minutes: {selectedData.cookTimeMinutes}</p>
-          <p>Cuisine: {selectedData.cuisine}</p>
-          <p>Rating: {selectedData.rating}</p>
-          <p>Meal Type: {selectedData.mealType}</p>
-          <button type="button" id={`favorite-btn-${half}`}>
-            {Favorites.includes(selectedData.id) ? "Unfavorite" : "Favorite"}
-          </button>
-        </div>
+        )}
         <img
           src={half == "left" ? ArrowLeftHover : ArrowRightHover}
           id={`${half}-arrow`}

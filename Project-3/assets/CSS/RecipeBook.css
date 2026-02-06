@@ -88,6 +88,13 @@ input::placeholder {
   text-align: center;
 }
 
+.book-text.book-error{
+  display: flex ;
+  justify-content: center;
+  align-items: center;
+  font-size: 36px;
+}
+
 /* Removing the Scrollbar Stylings (this ensures it on other browsers)  */
 .book-text::-webkit-scrollbar {
   display: none;
