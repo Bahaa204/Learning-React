@@ -2,7 +2,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import RecipeModal from "../components/RecipeModal";
 import { recipes } from "../Helpers/Recipes";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ArrowLeftHover from "../../assets/Images/recipebook/ArrowLeftHover.png";
 import ArrowRightHover from "../../assets/Images/recipebook/ArrowRightHover.png";
 import "../../assets/CSS/RecipeBook.css";
@@ -13,12 +13,47 @@ export default function RecipeBook() {
   const [Favorites, setFavorites] = useState(
     JSON.parse(localStorage.getItem("favorites")) || [],
   );
-  const [IsFilterActive, setIsFilterActive] = useState(false);
   const [ModalOptions, setModalOptions] = useState({
     isIngredient: false,
     recipe: { instructions: [], ingredients: [] },
     isOpen: false,
   });
+  const [RecipeName, setRecipeName] = useState("");
+  const [Mealtype, setMealtype] = useState("All");
+  const [Preptime, setPreptime] = useState(0);
+
+  useEffect(() => {
+    function applyFilter() {
+      // console.log("Name: ", RecipeName);
+      // console.log("MealType: ", Mealtype);
+      // console.log("Preptime: ", Preptime);
+      const isFilterActive =
+        RecipeName !== "" || Mealtype !== "All" || Preptime !== 0;
+      console.log("is filter active?", isFilterActive);
+
+      const filteredData = DisplayedRecipes.filter((recipe) => {
+        if (Mealtype == "All") {
+          return (
+            recipe.name.trim().toLowerCase().includes(RecipeName) &&
+            recipe.prepTimeMinutes >= Preptime
+          );
+        }
+        return (
+          recipe.name.trim().toLowerCase().includes(RecipeName) &&
+          recipe.mealType.includes(Mealtype) &&
+          recipe.prepTimeMinutes >= Preptime
+        );
+      });
+
+      if (isFilterActive) {
+        console.log("filtered Data: ", filteredData);
+        setDisplayedRecipes(filteredData);
+      } else {
+        setDisplayedRecipes(recipes);
+      }
+    }
+    applyFilter();
+  }, [RecipeName, Mealtype, Preptime]);
 
   function getRecipe(event) {
     const half = event.target.id.split("-")[2];
@@ -145,20 +180,28 @@ export default function RecipeBook() {
           <input
             type="text"
             name="name-input"
-            id="nameInput"
             placeholder="eg: pizza"
+            onChange={(event) => {
+              setRecipeName(event.target.value);
+            }}
           />
           <label htmlFor="mealType">Meal Type:</label>
-          <select name="meal-type" id="mealType" defaultValue="All">
+          <select
+            name="meal-type"
+            value={Mealtype}
+            onChange={(event) => {
+              setMealtype(event.target.value);
+            }}
+          >
             <option>All</option>
-            <option value="Dinner">Dinner</option>
-            <option value="Lunch">Lunch</option>
-            <option value="Snack">Snack</option>
-            <option value="Dessert">Dessert</option>
-            <option value="Side Dish">Side Dish</option>
-            <option value="Appetizer">Appetizer</option>
-            <option value="Snacks">Snacks</option>
-            <option value="Breakfast">Breakfast</option>
+            <option>Dinner</option>
+            <option>Lunch</option>
+            <option>Snack</option>
+            <option>Dessert</option>
+            <option>Side Dish</option>
+            <option>Appetizer</option>
+            <option>Snacks</option>
+            <option>Breakfast</option>
             <option>Beverage</option>
           </select>
           <label htmlFor="prepTimeInput">
@@ -167,8 +210,10 @@ export default function RecipeBook() {
           <input
             type="number"
             name="prep-time-input"
-            id="prepTimeInput"
             placeholder="eg: 10"
+            onChange={(event) => {
+              setPreptime(parseInt(event.target.value) || 0);
+            }}
           />
           <input type="checkbox" name="favorite-input" id="favoritesInput" />
           <label htmlFor="favoritesInput">Show Favorites</label>
