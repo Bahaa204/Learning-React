@@ -3,6 +3,7 @@ import Home from "./Pages/Home";
 import About from "./Pages/About";
 import Contact from "./Pages/Contact";
 import Request from "./Pages/Request";
+import RecipeBook from "./Pages/RecipeBook";
 import "./App.css";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
         <Route path="request" element={<Request />} />
+        <Route path="recipe-book" element={<RecipeBook />} />
       </Routes>
     </>
   );
