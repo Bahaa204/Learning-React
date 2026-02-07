@@ -201,7 +201,7 @@ export default function RecipeBook() {
   return (
     <>
       <Header />
-      <main>
+      <main className="main-book">
         <div className="hero-text">
           <h1>Welcome to our Recipe Book</h1>
           <p>
