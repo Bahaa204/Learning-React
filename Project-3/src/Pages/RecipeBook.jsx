@@ -52,6 +52,23 @@ export default function RecipeBook() {
     applyFilter();
   }, [RecipeName, Mealtype, Preptime]);
 
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(Favorites));
+  }, [Favorites]);
+
+  function isFavorite(recipeID) {
+    return Favorites.some((recipe) => recipe.id === recipeID);
+  }
+
+  function saveFavorites(event) {
+    const recipe = getRecipe(event);
+    if (isFavorite(recipe.id)) {
+      setFavorites(Favorites.filter((r) => r.id !== recipe.id));
+    } else {
+      setFavorites([...Favorites, recipe]);
+    }
+  }
+
   function getRecipe(event) {
     const half = event.target.id.split("-")[2];
     // console.log("Half: ", half);
@@ -161,8 +178,12 @@ export default function RecipeBook() {
             <p>Cuisine: {selectedData.cuisine}</p>
             <p>Rating: {selectedData.rating}</p>
             <p>Meal Type: {selectedData.mealType.join(", ")}</p>
-            <button type="button" id={`favorite-btn-${half}`}>
-              {Favorites.includes(selectedData.id) ? "Unfavorite" : "Favorite"}
+            <button
+              type="button"
+              id={`favorite-btn-${half}`}
+              onClick={saveFavorites}
+            >
+              {isFavorite(selectedData.id) ? "Unfavorite" : "Favorite"}
             </button>
           </div>
         )}
@@ -230,7 +251,16 @@ export default function RecipeBook() {
               setPreptime(parseInt(event.target.value) || 0);
             }}
           />
-          <input type="checkbox" name="favorite-input" id="favoritesInput" />
+          <input
+            type="checkbox"
+            name="favorite-input"
+            id="favoritesInput"
+            onChange={(event) => {
+              const ischecked = event.target.checked;
+              console.log("Checked: ", ischecked);
+              setDisplayedRecipes(ischecked ? Favorites : recipes);
+            }}
+          />
           <label htmlFor="favoritesInput">Show Favorites</label>
         </div>
         <div className="recipe-book">
