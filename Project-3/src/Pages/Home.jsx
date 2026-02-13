@@ -5,7 +5,7 @@ import Logo from "../../assets/Images/logo.png";
 import { getPartialData } from "../Helpers/Recipes.js";
 
 export default function Home() {
-  const [recipe1, recipe2, recipe3, recipe4] = getPartialData();
+  const recipes = getPartialData();
 
   return (
     <>
@@ -29,30 +29,15 @@ export default function Home() {
       <section className="featured">
         <h2>Featured Recipes</h2>
         <div className="recipes">
-          <div className="recipe-card">
-            <h3>{recipe1.name}</h3>
-            <p>
-              {`Meal Type: ${recipe1.mealType.join(", ")} | Difficulty: ${recipe1.difficulty}`}
-            </p>
-          </div>
-          <div className="recipe-card red">
-            <h3>{recipe2.name}</h3>
-            <p>
-              {`Meal Type: ${recipe2.mealType.join(", ")} | Difficulty: ${recipe2.difficulty}`}
-            </p>
-          </div>
-          <div className="recipe-card orange">
-            <h3>{recipe3.name}</h3>
-            <p>
-              {`Meal Type: ${recipe3.mealType.join(", ")} | Difficulty: ${recipe3.difficulty}`}
-            </p>
-          </div>
-          <div className="recipe-card brown">
-            <h3>{recipe4.name}</h3>
-            <p>
-              {`Meal Type: ${recipe4.mealType.join(", ")} | Difficulty: ${recipe4.difficulty}`}
-            </p>
-          </div>
+          {recipes.map((recipe, index) => {
+            const colors = ["", "red", "orange", "brown"];
+            return (
+              <div key={recipe.id} className={`recipe-card ${colors[index]}`}>
+                <h3>{recipe.name}</h3>
+                <p>{`Meal Type: ${recipe.mealType.join(", ")} | Difficulty: ${recipe.difficulty}`}</p>
+              </div>
+            );
+          })}
         </div>
       </section>
 
