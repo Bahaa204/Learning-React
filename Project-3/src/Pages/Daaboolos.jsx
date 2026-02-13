@@ -1,39 +1,24 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useEffect, useRef, useState } from "react";
-import { loadMessages, saveMessages, askGemini } from "../Helpers/ai";
+import { saveMessages, askGemini } from "../Helpers/ai";
 import Logo from "../../assets/Images/old-logo.png";
 import GIF from "../../assets/GIF/Daaboolos.gif";
 import "../../assets/CSS/Daaboolos.css";
 
 export default function Daaboolos() {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(
+    JSON.parse(sessionStorage.getItem("messages")) || [],
+  );
   const [input, setInput] = useState("");
   const [gifVisible, setGifVisible] = useState(false);
 
   const chatRef = useRef(null);
   const containerRef = useRef(null);
 
-  // Load chat on mount
   useEffect(() => {
-    setMessages(loadMessages());
-  }, []);
-
-  // Save + resize on update
-  useEffect(() => {
-    saveMessages(messages);
-    expandWindow();
+    saveMessages(chatRef, containerRef, messages);
   }, [messages]);
-  function expandWindow(forced = false) {
-    if (!chatRef.current || !containerRef.current) return;
-
-    const containerHeight = containerRef.current.offsetHeight;
-    const messagesHeight = chatRef.current.scrollHeight;
-
-    if (messagesHeight > containerHeight || forced) {
-      containerRef.current.style.height = messagesHeight + 150 + "px";
-    }
-  }
 
   function addMessage(text, isBot = false) {
     setMessages((prev) => [...prev, { text, isBot }]);
@@ -47,7 +32,7 @@ export default function Daaboolos() {
 
     const userText = input;
     setInput("");
-    addMessage(userText, false);
+    addMessage(userText);
 
     try {
       const answer = await askGemini(userText, setGifVisible);
