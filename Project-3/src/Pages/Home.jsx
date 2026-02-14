@@ -3,6 +3,7 @@ import Footer from "../components/Footer";
 import "../../assets/CSS/Home.css";
 import Logo from "../../assets/Images/logo.png";
 import { getPartialData } from "../Helpers/Recipes.js";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const recipes = getPartialData();
@@ -21,9 +22,9 @@ export default function Home() {
           actually cook. CookLab started as a small idea during exams, after
           instant noodles failed us one time too many.
         </p>
-        <a href="recipe-book" className="btn">
+        <Link to="/recipe-book" className="btn">
           Read Recipes
-        </a>
+        </Link>
       </section>
 
       <section className="featured">
@@ -50,9 +51,9 @@ export default function Home() {
             CookLab started as a small idea during exams when instant noodles
             betrayed us one too many times.
           </p>
-          <a href="about" className="btn">
+          <Link to="/about" className="btn">
             Read More
-          </a>
+          </Link>
         </div>
         <img src={Logo} alt="Logo" className="about-img" />
       </section>

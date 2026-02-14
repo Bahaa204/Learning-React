@@ -10,13 +10,13 @@ export default function Footer() {
       <div className="footer-left">
         <h3>Cooking</h3>
         <div className="socials">
-          <a href="">
+          <a href="https://www.instagram.com">
             <img src={instagramLogo} alt="Instagram Logo" />
           </a>
-          <a href="">
+          <a href="https://www.x.com">
             <img src={twitterLogo} alt="Twitter Logo" />
           </a>
-          <a href="">
+          <a href="https://www.facebook.com">
             <img src={facebookLogo} alt="Facebook Logo" />
           </a>
         </div>
