@@ -15,7 +15,7 @@ export default function RecipeBook() {
   );
   const [ModalOptions, setModalOptions] = useState({
     isIngredient: false,
-    recipe: { instructions: [], ingredients: [] },
+    recipe: recipes[0],
     isOpen: false,
   });
   const [RecipeName, setRecipeName] = useState("");
